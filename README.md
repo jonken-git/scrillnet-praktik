@@ -1,4 +1,4 @@
-# Kravspecifikation forumlär
+# Kravspecifikation formulär
 
 ## Beskrivning
 Målet är att bygga ett verktyg för att kunna skapa egna formulär.  
@@ -11,6 +11,11 @@ Formuläret ska byggas med en uppsättning av fördefinierade inputs och/eller m
 - Användaren kan välja vilka inputs som ska finnas i formuläret.
 - Användaren kan sätta egen style på inputs i formuläret.
 - Användaren kan ställa in ordningen på inputs i formuläret.
+
+### Att tänka på
+Jobba så objektorienterat som möjligt. Så att ni kanske har en klass för formulär, en klass för inputs 
+(kanske en för style också), både på backend och frontend.  
+
 
 ## Funktionalitet
 Det kommer behövas en databas med lite grundläggande tabeller.  
