@@ -13,7 +13,7 @@
                 <option value="users">Users</option>
                 <option value="customers">Customers</option>
             </select>
-            <input type="text" name="title" title="Give the form a title" minlength="4" maxlength="30" required>
+            <input type="text" name="title" title="Give the form a title" placeholder="Title" minlength="4" maxlength="30" required>
             <input type="submit" value="create" id="createForm">
         </form>
     </body>
