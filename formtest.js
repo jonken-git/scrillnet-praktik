@@ -72,9 +72,7 @@ function generateData() {
     document.getElementById('data').value = JSON.stringify(dbData)
 }
 
-var styles = {};
-var styleOptions = globStyles.getElementsByTagName('input')
-for (var option of styleOptions) {option.addEventListener('change', function() {
+function updateStyles() {
     if (elements.length != 0 && this.validity.valid == true) {
         var target = this.name
         var change = this.value
@@ -92,7 +90,15 @@ for (var option of styleOptions) {option.addEventListener('change', function() {
         })
     }
     else {console.warn('no elements or invalid input')}
-})}
+}
+
+var styles = {};
+var styleOptions = globStyles.getElementsByTagName('input')
+var styleSelect = globStyles.getElementsByTagName('select')
+
+styleSelect[0].addEventListener('change',updateStyles)
+
+for (var option of styleOptions) {option.addEventListener('change',updateStyles)}
 
 var reset = document.createElement('input')
 reset.type = 'reset'
