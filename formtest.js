@@ -151,6 +151,16 @@ addButt.addEventListener('click', function() {
         var legend = document.createElement('legend')
         //insert text
         legend.innerText = select.value
+        //create remove button
+        var remove = document.createElement('input')
+        //set type
+        remove.type = 'button'
+        //set id
+        remove.id = elements.length
+        //set value
+        remove.value = 'remove'
+        //add to legend
+        legend.appendChild(remove)
         //add to settings
         newSettings.appendChild(legend)
         //create settings
@@ -231,28 +241,34 @@ addButt.addEventListener('click', function() {
         //label
         label(elements.length + ',15','Value to be submitted',newSettings,value)
         //create listeners
-        const children = newSettings.children;
-        for (let i = 0; i < children.length; i++) {
-            children[i].addEventListener('change'/*input*/, (event) => {
-                var thingToChange = children[i].name
-                var value = children[i].value
-                if (children[i].name == 'innerText') {
+        remove.addEventListener('click',() => {
+            finalForm.removeChild(newLabel)
+            finalForm.removeChild(newElement)
+            editorContainer.removeChild(newSettings)
+            elements.splice(newElement,1)
+        })
+        const inputs = newSettings.getElementsByTagName('input');
+        for (var lorem of inputs) {
+            lorem.addEventListener('change'/*input*/, (event) => {
+                var thingToChange = lorem.name
+                var value = lorem.value
+                if (lorem.name == 'innerText') {
                     labels[newSettings.id-1].label.innerText = value
-                    console.log(children[i] + ',' + thingToChange + ',' + value)
+                    console.log(lorem + ',' + thingToChange + ',' + value)
                 }
                 else {
-                    if (children[i].type != 'checkbox') {
+                    if (lorem.type != 'checkbox') {
                         elements[newSettings.id-1].setAttribute(thingToChange,value)
                     }
-                    console.log(children[i] + ',' + thingToChange + ',' + value)
-                    if (children[i].type == 'checkbox') {
-                        if (children[i].value == 'on') {
+                    console.log(lorem + ',' + thingToChange + ',' + value)
+                    if (lorem.type == 'checkbox') {
+                        if (lorem.value == 'on') {
                             elements[newSettings.id-1].setAttribute(thingToChange,value)
                         }
                         else {elements[newSettings.id-1].removeAttribute(thingToChange)}
-                        console.log('value was '+children[i].value)
-                        value == 'on' ? children[i].value = 'off' : children[i].value = 'on'
-                        console.log('value now '+children[i].value)
+                        console.log('value was '+lorem.value)
+                        value == 'on' ? lorem.value = 'off' : lorem.value = 'on'
+                        console.log('value now '+lorem.value)
                     }
                 }
                 generateData()
