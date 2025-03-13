@@ -247,6 +247,12 @@ addButt.addEventListener('click', function() {
             editorContainer.removeChild(newSettings)
             elements.splice(newElement,1)
         })
+        newSettings.addEventListener('mouseenter',() => {
+            elements[newSettings.id-1].classList.add('focused')
+        })
+        newSettings.addEventListener('mouseleave',() => {
+            elements[newSettings.id-1].classList.remove('focused')
+        })
         const inputs = newSettings.getElementsByTagName('input');
         for (var lorem of inputs) {
             lorem.addEventListener('change'/*input*/, (event) => {
