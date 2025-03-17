@@ -246,12 +246,16 @@ addButt.addEventListener('click', function() {
             finalForm.removeChild(newElement)
             editorContainer.removeChild(newSettings)
             elements.splice(newElement,1)
+            labels.splice(newLabel,1)
+            elements.splice(newElement,1)
         })
         newSettings.addEventListener('mouseenter',() => {
             elements[newSettings.id-1].classList.add('focused')
+            console.log(newSettings.id-1)
         })
         newSettings.addEventListener('mouseleave',() => {
             elements[newSettings.id-1].classList.remove('focused')
+            console.log(newSettings.id-1)
         })
         const inputs = newSettings.getElementsByTagName('input');
         for (var lorem of inputs) {
@@ -260,11 +264,13 @@ addButt.addEventListener('click', function() {
                 var value = lorem.value
                 if (lorem.name == 'innerText') {
                     labels[newSettings.id-1].label.innerText = value
+                    console.log(newSettings.id-1)
                     console.log(lorem + ',' + thingToChange + ',' + value)
                 }
                 else {
                     if (lorem.type != 'checkbox') {
                         elements[newSettings.id-1].setAttribute(thingToChange,value)
+                        console.log(newSettings.id-1)
                     }
                     console.log(lorem + ',' + thingToChange + ',' + value)
                     if (lorem.type == 'checkbox') {
