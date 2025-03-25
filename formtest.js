@@ -247,40 +247,42 @@ addButt.addEventListener('click', function() {
             editorContainer.removeChild(newSettings)
             elements.splice(newElement,1)
             labels.splice(newLabel,1)
-            elements.splice(newElement,1)
+            if (newElement.classList.contains('focused')) {
+                newElement.classList.remove('focused')
+            }
         })
         newSettings.addEventListener('mouseenter',() => {
             elements[newSettings.id-1].classList.add('focused')
-            console.log(newSettings.id-1)
+            //console.log(newSettings.id-1)
         })
         newSettings.addEventListener('mouseleave',() => {
             elements[newSettings.id-1].classList.remove('focused')
-            console.log(newSettings.id-1)
+            //console.log(newSettings.id-1)
         })
-        const inputs = newSettings.getElementsByTagName('input');
-        for (var lorem of inputs) {
-            lorem.addEventListener('change'/*input*/, (event) => {
-                var thingToChange = lorem.name
-                var value = lorem.value
-                if (lorem.name == 'innerText') {
+        const children = newSettings.children;
+        for (let i = 0; i < children.length; i++) {
+            children[i].addEventListener('change'/*input*/, (event) => {
+                var thingToChange = children[i].name
+                var value = children[i].value
+                if (children[i].name == 'innerText') {
                     labels[newSettings.id-1].label.innerText = value
                     console.log(newSettings.id-1)
-                    console.log(lorem + ',' + thingToChange + ',' + value)
+                    console.log(children[i] + ',' + thingToChange + ',' + value)
                 }
                 else {
-                    if (lorem.type != 'checkbox') {
+                    if (children[i].type != 'checkbox') {
                         elements[newSettings.id-1].setAttribute(thingToChange,value)
                         console.log(newSettings.id-1)
                     }
-                    console.log(lorem + ',' + thingToChange + ',' + value)
-                    if (lorem.type == 'checkbox') {
-                        if (lorem.value == 'on') {
+                    console.log(children[i] + ',' + thingToChange + ',' + value)
+                    if (children[i].type == 'checkbox') {
+                        if (children[i].value == 'on') {
                             elements[newSettings.id-1].setAttribute(thingToChange,value)
                         }
                         else {elements[newSettings.id-1].removeAttribute(thingToChange)}
-                        console.log('value was '+lorem.value)
-                        value == 'on' ? lorem.value = 'off' : lorem.value = 'on'
-                        console.log('value now '+lorem.value)
+                        console.log('value was '+children[i].value)
+                        value == 'on' ? children[i].value = 'off' : children[i].value = 'on'
+                        console.log('value now '+children[i].value)
                     }
                 }
                 generateData()
