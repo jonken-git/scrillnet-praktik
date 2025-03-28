@@ -1,11 +1,11 @@
 <?php
-    //open and check db connection
+    open and check db connection
     $connection = new mysqli("localhost", "root", "loremipsum", "test_db2");
     if ($connection->connect_error) {
         die("Connection failed: " . $connection->connect_error);
     }
     echo "Connected successfully <br>";
-    
+    print_r($_POST);
     $title = $_POST["title"];
     $table = $_POST["table"];
     $data = $_POST["data"];
@@ -45,5 +45,5 @@
         }
     }
     
-    $connection->close();
+    // $connection->close();
 ?>
