@@ -51,9 +51,9 @@ class Database
 
         return $this->rows;
     }
-    public function InsertUser()
+    public function insert(?array $insertData)
     {
-        $filteredPost = array_diff_key($_POST, ["submit" => ""]);
+        $filteredPost = array_diff_key($insertData, ["submit" => ""]);
 
         $keysString = implode(", ", array_keys($filteredPost));
 
