@@ -1,0 +1,150 @@
+<html lang="en">
+    <head>
+        <title>Form editor</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <style>
+            body {background-image:linear-gradient(135deg,red,orange,yellow,green,blue,purple,magenta)}
+            form {border:gray 5px solid; padding:5px; text-align: center; font-family: monospace; max-height:95%; background-color: lightgray;}
+            form:first-of-type {float:inline-start;max-width: 33vw; overflow: auto;}
+            form:first-of-type input[type=file] {border-width: 2px; border-style: groove; border-color: threedface; border-image: initial; padding:1px;}
+            form:last-of-type {overflow: hidden; position:absolute; top:8px; right:8px}
+            #creator {max-width: fit-content; margin-left:auto; margin-right:auto}
+            form input[required]::after {content:" *"; color:red}
+            #currEl {overflow: auto; max-height: 250px; border:2px solid black; padding:3px}
+            #currEl fieldset {margin-top:5px}
+            form:first-of-type input {display:list-item; justify-self: center; margin-bottom: 5px;}
+            .setting > input {display: list-item; justify-self: center; margin-bottom:5px}
+            .setting legend input {margin-left:10px}
+            #submitcontainer {display:flex; justify-content: space-around;}
+            details input {display: list-item; justify-self: center; margin-bottom: 5px;}
+            details summary {-webkit-user-select: none; user-select: none;}
+            .valcheck:invalid {border:2px solid red}
+            .valcheck:valid {border:2px solid green}
+            #globstyle {border-width: 2px; border-style: groove; border-color: threedface;}
+            #style {display:list-item; margin-left:auto; margin-right:auto}
+            .focused {outline: -webkit-focus-ring-color auto 1px; outline-offset: 0px;}
+
+            @media screen and (max-width: 800px) {
+                body {
+                    display:grid; position:relative; float:none;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <form id="resultForm">
+            <p id="placeholder1">Currently no elements added</p>
+            <div id="submitcontainer">
+                <input type="submit" id="submit" disabled>
+            </div>
+        </form>
+        
+        
+        <form id="creator" method='post' action="dbsave.php">
+            <h1>Save form</h1>
+            <select title="Select which database table to connect to" id="dbSelect" name="table" required>
+                <option value="">Select table</option>
+                <option value="users">Users</option>
+                <option value="customers">Customers</option>
+            </select>
+            <input type="text" name="title" title="Give the form a title" placeholder="Title" minlength="4" maxlength="30" required>
+            <input type="hidden" name="data" id="data" value="">
+            <input type="submit" value="save" id="saveForm">
+        </form>
+        
+        
+        <form id="formeditor">
+            <h1>Add elements</h1>
+            <select title="Select which type of input to add" id="elSelect">
+                <option value="none">Select element</option>
+                <hr>
+                <optgroup label="Buttons">
+                    <option value="button">Button</option>
+                    <option value="checkbox">Checkbox</option>
+                    <option value="radio" title="These are placed in groups and must have the same name">Radio buttons</option>
+                </optgroup>
+                <hr>
+                <optgroup label="Time">
+                    <option value="date">Date</option>
+                    <option value="datetime-local">Date and time</option>
+                    <option value="month">Month</option>
+                    <option value="week">Week</option>
+                    <option value="time">Time</option>
+                </optgroup>
+                <hr>
+                <optgroup label="Text inputs">
+                    <option value="text">Plain text</option>
+                    <option value="email">Email address</option>
+                    <option value="search">Search bar</option>
+                    <option value="url">Web address/url</option>
+                </optgroup>
+                <hr>
+                <optgroup label="Numbers">
+                    <option value="number">Basic number</option>
+                    <option value="password">Password</option>
+                    <option value="tel">Phone number</option>
+                    <option value="range">Slider</option>
+                </optgroup>
+                <hr>
+                <optgroup label="Other">
+                    <option value="file">File picker</option>
+                    <option value="color">Color picker</option>
+                </optgroup>
+            </select>
+            <input type="button" value="Add element" id="addElement">
+            <hr>
+            <div>
+                <fieldset id="submitSettings">
+                    <legend>Type of Submit button</legend>
+                    <label for="normal">Normal button</label>
+                    <input type="radio" id="normal" checked name="submitButton" value="submit">
+                    <label for="image">Button with image</label>
+                    <input type="radio" id="image" name="submitButton" value="image">
+                    <hr>
+                    <details id="submitdetails" name="detgroup">
+                        <summary>More options</summary>
+                        <label for="imagepicker">Select image for the submit button</label>
+                        <input type="url" id="imagepicker" name="src" placeholder="Image url" disabled>
+                        <label for="imagewidth">Select image width</label>
+                        <input type="number" name="width" id="imagewidth" placeholder="Width" disabled>
+                        <label for="imageheight">Select image height</label>
+                        <input type="number" name="height" id="imageheight" placeholder="Height" disabled>
+                    </details>
+                </fieldset>
+                <label for="reset">Add reset button &lpar;not recommended&rpar;</label>
+                <input type="checkbox" id="reset" name="reset button">
+            </div>
+            <hr>
+            <details id="globstyle" name="detgroup">
+                <summary><strong>Global styling</strong></summary>
+                <label for="textcolor">Text color</label>
+                <input type="color" id="textcolor" name="color">
+                <label for="bgcolor">Background color</label>
+                <input type="color" id="bgcolor" name="background-color">
+                <hr>
+                <label for="width">Border thickness</label>
+                <input type="text" class="valcheck" id="width" pattern="^\d{1,2}(px)" name="border-width" placeholder="00px" size="10">
+                <label for="style">Border style</label>
+                <select id="style" name="border-style">
+                    <option value="solid">Solid</option>
+                    <option value="dotted">Dotted</option>
+                    <option value="dashed">Dashed</option>
+                    <option value="double">Double</option>
+                    <option value="groove">Groove</option>
+                    <option value="ridge">Ridge</option>
+                    <option value="inset">Inset</option>
+                    <option value="outset">Outset</option>
+                </select>
+                <label for="radius">Border radius (for rounded corners)</label>
+                <input type="text" class="valcheck" id="radius" pattern="^\d{1,2}(px|%)" name="border-radius" placeholder="00px or 00%" size="10">
+                <label for="color">Border color</label>
+                <input type="color" id="color" name="border-color">
+            </details>
+            <h1>Current elements</h1>
+            <div id="currEl">
+                <p id="placeholder2">Currently no elements added</p>
+            </div>
+        </form>
+    </body>
+    <script src="formtest.js"></script>
+</html>
