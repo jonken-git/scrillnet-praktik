@@ -57,11 +57,12 @@ function generateData() {
     elements.forEach(
         (elmnt,index) => {
             var dbElement = {}
-            var attrs = []
+            var attrs = {}
             dbElement.type = elmnt.type
             dbElement.label = labels[index].label.innerText
             for (namer of elmnt.getAttributeNames()) {
-                attrs.push(namer + ':' + elmnt.getAttribute(namer))
+                // attrs.push(namer + ':' + elmnt.getAttribute(namer))
+                attrs[namer] = elmnt.getAttribute(namer)
             }
             dbElement.data = attrs
             console.log(dbElement)

@@ -53,19 +53,28 @@ class Database
     }
     public function insert(?array $insertData)
     {
-        $filteredPost = array_diff_key($insertData, ["submit" => ""]);
+        unset($insertData["submit"]);
+        $keysString = implode(", ", array_keys($insertData));
 
-        $keysString = implode(", ", array_keys($filteredPost));
+        $valuesString = implode(", ", array_map(function ($value) {
 
-        $valuesString = implode(", ", array_map(fn($value) => '"' . $value . '"', array_values($filteredPost)));
+            if (json_validate($value) == true) {
+                return "'" . $value . "'";
+            } else {
+                return '"' . $value . '"';
+            }
+        }, array_values($insertData)));
+
 
         $sql = "INSERT INTO $this->table ($keysString) VALUES ($valuesString)";
         print($sql);
-        return;
+
         if ($this->connection->query($sql) === TRUE) {
             echo "New record inserted successfully!";
         } else {
             echo "Error: " . $this->connection->error;
         }
+
+        return $this->connection->insert_id;
     }
 }

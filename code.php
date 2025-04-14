@@ -67,7 +67,7 @@
     }
     if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit"])) {
         $db = new Database("users");
-        $db->InsertUser();
+        // $db->InsertUser();
     }
 
     ?>

@@ -7,4 +7,9 @@ class InputsDatabase
     {
         $this->database = new Database("inputs");
     }
+
+    Public function insert(?array $insertData){
+        $this->database->insert($insertData);
+    }
 }
+

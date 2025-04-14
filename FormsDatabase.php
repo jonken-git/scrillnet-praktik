@@ -10,6 +10,6 @@ class FormsDatabase
     }
 
     Public function insert(?array $insertData){
-        $this->database->insert($insertData);
+       return $this->database->insert($insertData);
     }
 }
